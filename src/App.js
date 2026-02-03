@@ -98,7 +98,13 @@ function App() {
         placeholder="Enter a task"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            addTask();
+          }
+        }}
       />
+
       <button onClick={addTask}>Add</button>
       {tasks.length === 0 && (
         <p>No tasks yet. Add one above 👆</p>
@@ -119,6 +125,11 @@ function App() {
                   type="text"
                   value={editingText}
                   onChange={(e) => setEditingText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      saveEdit(task.id);
+                    }
+                  }}
                 />
                 <button onClick={() => saveEdit(task.id)}>Save</button>
                 <button onClick={cancelEdit}>Cancel</button>
@@ -137,6 +148,7 @@ function App() {
               </>
             )}
           </li>
+
         ))}
       </ul>
 

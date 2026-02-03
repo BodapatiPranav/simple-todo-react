@@ -16,3 +16,61 @@ body {
 h1 {
   text-align: center;
 }
+
+input[type="text"] {
+  width: 70%;
+  padding: 8px;
+  margin-right: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 8px 12px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:nth-of-type(1) {
+  background-color: #4caf50;
+  color: white;
+}
+
+button:nth-of-type(2) {
+  background-color: #f44336;
+  color: white;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+li span {
+  flex: 1;
+  margin-left: 10px;
+}
+
+li input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+p {
+  text-align: center;
+  color: #666;
+}
