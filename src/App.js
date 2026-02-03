@@ -5,6 +5,9 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState('');
   const [isLoaded, setIsLoaded] = useState(false); // 👈 ADD THIS LINE
+  const [editingId, setEditingId] = useState(null);
+  const [editingText, setEditingText] = useState('');
+
 
   useEffect(() => {
     if (isLoaded) {
@@ -12,12 +15,17 @@ function App() {
     }
   }, [tasks, isLoaded]);
   useEffect(() => {
-    const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
+    try {
+      const savedTasks = localStorage.getItem('tasks');
+      if (savedTasks) {
+        setTasks(JSON.parse(savedTasks));
+      }
+    } catch (error) {
+      console.error("Failed to load tasks", error);
     }
-    setIsLoaded(true); // 👈 ADD THIS
+    setIsLoaded(true);
   }, []);
+
 
 
 
@@ -51,6 +59,11 @@ function App() {
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
+  const startEdit = (task) => {
+    setEditingId(task.id);
+    setEditingText(task.text);
+  };
+
 
 
 
@@ -66,6 +79,9 @@ function App() {
         onChange={(e) => setInput(e.target.value)}
       />
       <button onClick={addTask}>Add</button>
+      {tasks.length === 0 && (
+        <p>No tasks yet. Add one above 👆</p>
+      )}
 
       <ul>
         {tasks.map((task) => (
