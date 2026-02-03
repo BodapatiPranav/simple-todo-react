@@ -1,9 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false); // 👈 ADD THIS LINE
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+  }, [tasks, isLoaded]);
+  useEffect(() => {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    }
+    setIsLoaded(true); // 👈 ADD THIS
+  }, []);
+
+
+
 
   // Function to add a task
   const addTask = () => {
@@ -31,6 +48,10 @@ function App() {
       )
     );
   };
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
 
 
   return (
@@ -58,6 +79,8 @@ function App() {
             <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
               {task.text}
             </span>
+            <button onClick={() => deleteTask(task.id)}>Delete</button>
+
           </li>
 
         ))}
