@@ -63,6 +63,27 @@ function App() {
     setEditingId(task.id);
     setEditingText(task.text);
   };
+  const saveEdit = (id) => {
+    if (!editingText.trim()) {
+      alert('Task cannot be empty!');
+      return;
+    }
+
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, text: editingText.trim() } : task
+      )
+    );
+
+    setEditingId(null);
+    setEditingText('');
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditingText('');
+  };
+
 
 
 
@@ -92,13 +113,30 @@ function App() {
               onChange={() => toggleComplete(task.id)}
             />
 
-            <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-              {task.text}
-            </span>
-            <button onClick={() => deleteTask(task.id)}>Delete</button>
-
+            {editingId === task.id ? (
+              <>
+                <input
+                  type="text"
+                  value={editingText}
+                  onChange={(e) => setEditingText(e.target.value)}
+                />
+                <button onClick={() => saveEdit(task.id)}>Save</button>
+                <button onClick={cancelEdit}>Cancel</button>
+              </>
+            ) : (
+              <>
+                <span
+                  style={{
+                    textDecoration: task.completed ? 'line-through' : 'none',
+                  }}
+                >
+                  {task.text}
+                </span>
+                <button onClick={() => startEdit(task)}>Edit</button>
+                <button onClick={() => deleteTask(task.id)}>Delete</button>
+              </>
+            )}
           </li>
-
         ))}
       </ul>
 
