@@ -74,3 +74,16 @@ p {
   text-align: center;
   color: #666;
 }
+.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+li button {
+  margin-left: 6px;
+}
+
+li {
+  gap: 6px;
+}
+
